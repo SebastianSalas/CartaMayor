@@ -19,10 +19,10 @@ public class GUI extends JFrame {
             "\nSi tu carta es igual que la de la maquina, el ganador se decedira por los palos" +
             "\nOros es mayor que Copas, Copas es mayor que Espadas y Espadas es mayor que Bastos";
     private Header headerProject;
-    private JLabel cartaJ, dado2;
+    private JLabel cartaJ, cartaM;
     private JButton lanzar, ayuda, salir;
-    private JPanel panelDados;
-    private ImageIcon imageDado;
+    private JPanel panelCartaJ,panelCartaM;
+    private ImageIcon imageCarta;
     private JTextArea mensajeSalida, resultadosDados;
     private Escucha escucha;
     private Model model;
@@ -36,8 +36,8 @@ public class GUI extends JFrame {
         //Default JFrame configuration
         this.setTitle("Carta Mayor");
         this.setSize(200,100);
-        //this.pack();
-        this.setUndecorated(true);
+        this.pack();
+        //this.setUndecorated(true);
         this.setResizable(true);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -49,13 +49,15 @@ public class GUI extends JFrame {
      * create Listener and control Objects used for the GUI class
      */
     private void initGUI() {
+        //Set up JFrame Container's Layout
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        //Set up JFrame Container's Layout
+
         //Create Listener Object and Control Object
-        //Set up JComponents
         escucha = new Escucha();
-        headerProject = new Header("Carta Mayor", Color.BLACK);
+        model = new Model();
+        //Set up JComponents
+        headerProject = new Header("Juego Carta Mayor", Color.BLACK);
         constraints.gridx=0;
         constraints.gridy=0;
         constraints.gridwidth=2;
@@ -82,6 +84,47 @@ public class GUI extends JFrame {
         constraints.anchor=GridBagConstraints.LINE_END;
 
         this.add(salir,constraints);
+
+        panelCartaJ = new JPanel();
+        panelCartaJ.setPreferredSize(new Dimension(300,180));
+        panelCartaJ.setBorder(BorderFactory.createTitledBorder("Tu Carta "));
+        constraints.gridx=0;
+        constraints.gridy=2;
+        constraints.gridwidth=1;
+        constraints.fill=GridBagConstraints.BOTH;
+        constraints.anchor=GridBagConstraints.CENTER;
+        add(panelCartaJ,constraints);
+
+        panelCartaM = new JPanel();
+        panelCartaM.setPreferredSize(new Dimension(300,180));
+        panelCartaM.setBorder(BorderFactory.createTitledBorder("Carta maquina "));
+        constraints.gridx=1;
+        constraints.gridy=2;
+        constraints.gridwidth=1;
+        constraints.fill=GridBagConstraints.BOTH;
+        constraints.anchor=GridBagConstraints.CENTER;
+        add(panelCartaM,constraints);
+
+        lanzar = new JButton("Sacar carta");
+        lanzar.addActionListener(escucha);
+        constraints.gridx=0;
+        constraints.gridy=3;
+        constraints.gridwidth=2;
+        constraints.fill=GridBagConstraints.NONE;
+        constraints.anchor=GridBagConstraints.CENTER;
+        add(lanzar,constraints);
+
+        mensajeSalida = new JTextArea(4,31);
+        mensajeSalida.setText("Usa el boton (?) para ver las reglas del juego");
+        mensajeSalida.setEditable(false);
+        mensajeSalida.setBackground(null);
+        mensajeSalida.setBorder(BorderFactory.createTitledBorder("Mensajes"));
+        constraints.gridx=0;
+        constraints.gridy=4;
+        constraints.gridwidth=2;
+        constraints.fill=GridBagConstraints.NONE;
+        constraints.anchor=GridBagConstraints.CENTER;
+        add(mensajeSalida,constraints);
         //Change this line if you change JFrame Container's Layout
     }
 
@@ -102,11 +145,23 @@ public class GUI extends JFrame {
     private class Escucha implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource()==ayuda){
-                JOptionPane.showMessageDialog(null,MENSAJE_INICIO);
+            /**
+             *
+             */
+            if (e.getSource() == lanzar) {
+                model.calcularResultado();
+                //int[] caras = modelCraps.getCaras();
+                //modelCraps.determinarJuego();
+                //resultadosDados.setText(modelCraps.getEstadoToString()[0]);
+                //mensajeSalida.setText(modelCraps.getEstadoToString()[1]);
             }else{
-                System.exit(0);
+                if(e.getSource()==ayuda){
+                    JOptionPane.showMessageDialog(null,MENSAJE_INICIO);
+                }else{
+                    System.exit(0);
+                }
             }
+
         }
 
     }

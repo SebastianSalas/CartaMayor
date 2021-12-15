@@ -8,7 +8,8 @@ package cartaMayor;
  */
 public class Model {
     private Carta turnoJ,turnoM,paloJ, paloM;
-    private int[] cartas,palo;
+    private int[] cartas;
+    private String estadoToString;
     private int estado, estadoPalo;
 
 
@@ -18,20 +19,26 @@ public class Model {
         turnoM = new Carta();
         paloJ = new Carta();
         paloM = new Carta();
-        cartas = new int[2];
-        palo = new int[2];
+        cartas = new int[4];
+
+        estadoToString = new String();
     }
 
 
     public void calcularResultado(){
         cartas[0]=turnoJ.getNum();
-        cartas[1]=turnoM.getNum();
+        cartas[1]=paloJ.getPalo();
+        cartas[2]=turnoM.getNum();
+        cartas[3]=paloM.getPalo();
 
+        //Machine win
         if (cartas[0] < cartas[1]){
             estado=1;
         }else{
+            //Player win
             if(cartas[0] > cartas[1]){
                 estado= 2;
+                //Draw
             }else{
                 definirPorPalo();
             }
@@ -39,8 +46,7 @@ public class Model {
     }
 
     private void definirPorPalo() {
-        palo[0]=paloJ.getPalo();
-        palo[1]=paloM.getPalo();
+
 
         /**
          * (oros, copas, espadas y bastos)
@@ -50,12 +56,39 @@ public class Model {
          * Basto = 4
          */
 
-        if (palo[0] < palo[1] ){
+        if (cartas[1] < cartas[3] ){
             estado = 3;
         }else{
             estado = 4;
         }
 
+    }
+
+    public String getEstadoToString() {
+        switch (estado){
+            case 1:
+                estadoToString = "Carta del jugador = "+cartas[0]+"\n" +
+                        "Carta de la máquina = "+cartas[2]+
+                        "\nLa máquina saco una carta de mayor valor, has perdido.";
+                break;
+            case 2:
+                estadoToString = "Carta del jugador = "+cartas[0]+"\n" +
+                        "Carta de la máquina = "+cartas[2]+
+                        "\n¡¡Sacaste una carta de mayor valor, has ganado!!";
+                break;
+            case 3:
+                estadoToString = "Carta del jugador = "+cartas[0]+"\n" +
+                        "Carta de la máquina = "+cartas[2]+
+                        "Por desempate el jugador ha ganado al obtener un palo mayor al de la máquina. \n" +
+                        "¡¡FELICIDADES!!";
+                break;
+            case 4:
+                estadoToString = "Carta del jugador = "+cartas[0]+"\n" +
+                        "Carta de la máquina = "+cartas[2]+
+                        "Por desempate la máquina ha ganado al obtener un palo mayor al del jugador. ";
+                break;
+        }
+        return estadoToString;
     }
 }
 
