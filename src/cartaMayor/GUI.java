@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 /**
  * This class is used for ...
  *
- * @version v.1.0.0 date:21/11/2021
+ * @version v.1.0.3 date:21/11/2021
  * @autor Jhon Alexander Valencia Hilamo jhon.hilamo@correounivalle.edu.co and
- * Janiert Sebastian Salas Castillo janiert.salas@correounivalle.edu.co
+ * @autor Janiert Sebastian Salas Castillo janiert.salas@correounivalle.edu.co
  */
 public class GUI extends JFrame {
 
@@ -37,13 +37,12 @@ public class GUI extends JFrame {
 
         //Default JFrame configuration
         this.setTitle("Carta Mayor");
-        this.setSize(200, 100);
+        this.setUndecorated(true);
         this.pack();
-        //this.setUndecorated(true);
         this.setResizable(true);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     /**
@@ -133,7 +132,6 @@ public class GUI extends JFrame {
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.CENTER;
         add(mensajeSalida, constraints);
-        //Change this line if you change JFrame Container's Layout
     }
 
     /**

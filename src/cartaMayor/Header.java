@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * This class is a kind of JLabel used to create a personalized Header for the project
  * @autor Jhon Alexander Valencia Hilamo jhon.hilamo@correounivalle.edu.co
- *        Janiert Sebastian Salas Castillo janiert.salas@correounivalle.edu.co
+ * @author Janiert Sebastian Salas Castillo janiert.salas@correounivalle.edu.co
  * @version @version v.1.0.0
  */
 public class Header extends JLabel {

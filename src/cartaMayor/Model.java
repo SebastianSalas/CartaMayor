@@ -4,9 +4,12 @@ package cartaMayor;
  * Model apply rules
  * estado 1= Machine winne
  * estado 2= Players winner
- * estado 3= draw
+ * estado 3= Player win by draw
+ * estado 4= Machine win by Palo
+ * estado 5= draw
  *
  * @author Alexander Valencia
+ * @author Janiert Salas
  */
 public class Model {
     private Carta turnoJ, turnoM, paloJ, paloM;
@@ -32,16 +35,17 @@ public class Model {
         cartas[3] = paloM.getPalo();
 
         //Player win
-        //Si el turno de la maquina es menor que el del jugador
+        //If the machine's card is less than the player's
         if (cartas[2] < cartas[0]) {
             estado = 2;
         } else {
             //Machine win
-            //Si el turno del jugador es menor que el de la maquina
+            //If the player's card is less than the machine's
             if (cartas[0] < cartas[2]) {
                 estado = 1;
-                //Draw
+
             } else {
+                //Draw
                 if (cartas[0] == cartas[2] || cartas[2] == cartas[0]) {
                     definirPorPalo();
                 }
@@ -61,11 +65,14 @@ public class Model {
          * Basto = 4
          */
 
+        //If the player's palo is higher
         if (cartas[1] < cartas[3]) {
             estado = 3;
         } else {
+            //If the machine's palo is higher
             if (cartas[1] > cartas[3]) {
                 estado = 4;
+                //Draw
             } else {
                 estado = 5;
             }
